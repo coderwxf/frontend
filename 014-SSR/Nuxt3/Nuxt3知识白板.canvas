@@ -1,0 +1,17 @@
+{
+	"nodes":[
+		{"type":"group","id":"686d6aa3b58191a7","x":-1400,"y":-1200,"width":820,"height":220,"color":"5","label":"前置内容"},
+		{"type":"file","file":"notes/001-简介/000 - 简介.md","id":"73100dec6a72766a","x":-1380,"y":-1162,"width":305,"height":162},
+		{"type":"file","file":"notes/002-安装/000 - 安装.md","id":"6c1b0f4bd94c90dc","x":-980,"y":-1162,"width":380,"height":162},
+		{"type":"file","file":"notes/003-项目配置/000 - 项目配置.md","id":"f478dd11bd062b12","x":-600,"y":-320,"width":400,"height":120},
+		{"type":"file","file":"notes/003-项目配置/001 - runtimeConfig.md","id":"fada4cfa90909547","x":80,"y":-880,"width":400,"height":120},
+		{"id":"3a3a30fa20d8b69d","x":320,"y":-680,"width":400,"height":161,"type":"file","file":"notes/003-项目配置/002-appConfig.md"},
+		{"id":"dadc6b830497de67","x":320,"y":-454,"width":400,"height":134,"type":"file","file":"notes/003-项目配置/003-app.md"}
+	],
+	"edges":[
+		{"id":"fe26786e44c29426","fromNode":"f478dd11bd062b12","fromSide":"right","toNode":"fada4cfa90909547","toSide":"left","label":"runtimeConfig"},
+		{"id":"57076ae3cd03c5b2","fromNode":"f478dd11bd062b12","fromSide":"right","toNode":"3a3a30fa20d8b69d","toSide":"left","label":"appConfig"},
+		{"id":"0aa6f44cfc26b886","fromNode":"f478dd11bd062b12","fromSide":"right","toNode":"dadc6b830497de67","toSide":"left","label":"app"},
+		{"id":"517bfe800952c88f","fromNode":"686d6aa3b58191a7","fromSide":"bottom","toNode":"f478dd11bd062b12","toSide":"top"}
+	]
+}
