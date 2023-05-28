@@ -1,16 +1,34 @@
 ## 简介
 
-Tailwind 是一个 CSS 框架，通过提供一系列的功能类，可以在 HTML 中可以直接使用这些类来实现样式的编写
+Tailwind CSS是一个功能强大的CSS框架，通过提供一系列预设的功能类来帮助开发者直接在HTML中以类似内联样式的形式编写对应样式
 
-与传统的 CSS 框架不同的是，Tailwind 的功能类可以添加伪类和响应式断点，并且可以使用 `@apply` 指令实现样式的复用
+Tailwind CSS的功能类支持伪类和响应式断点，并可以使用@apply指令实现样式的复用
 
-Tailwind 在编译时通过正则表达式提取所有位于 HTML 文件、JavaScript 组件和其他模板中的类名，生成相应的样式并将它们写入静态 CSS 文件，因此快速、灵活、可靠，并且没有运行时开销
+Tailwind CSS通过在编译时以正则表达式扫描HTML文件、JavaScript组件和其他模板中的类名，生成相应的样式，并将它们写入静态CSS文件，因此Tailwind CSS可以非常快速、灵活和可靠地生成样式，并且没有任何运行时开销。
 
-Tailwind CSS 非常注重性能，通过仅生成项目实际使用的 CSS（Tree Shaking）来生成尽可能小的 CSS 文件，并结合缩小和网络压缩技术，通常可以产生小于 10kB 的 CSS 文件，即使对于大型项目也是如此
+Tailwind CSS非常注重性能，通过仅生成项目实际使用的CSS（Tree Shaking）来生成尽可能小的CSS文件，并结合构建压缩和网络压缩，通常可以产生小于10kB的CSS文件，即使对于大型项目也是如此
 
-这意味着不必担心复杂的解决方案（如 code splitting），只需一次下载并缓存单个小型 CSS 文件，直到重新部署站点即可
+这意味着不必担心复杂的解决方案（如代码拆分），只需一次下载并缓存单个小型CSS文件，直到重新部署站点即可。
 
-Tailwind所处的功能只有将功能类按需转换为css，并不会处理添加浏览器前缀等css后续优化操作
+Tailwind可以作为PostCSS插件使用，因此可以看作是PostCSS处理CSS流程中的一个环节
+
+Tailwind的主要功能是将功能类按需转换为CSS，并生成相应的样式，但不会处理添加浏览器前缀等后续CSS操作, 如果需要添加浏览器前缀，可以使用其他PostCSS插件，例如Autoprefixer
+
+
+
+## 使用
+
+```shell
+# tailwindcss 即可以作为CLI(命令行)工具使用，也可以作为postcss的插件进行使用
+npm install -D tailwindcss
+
+# 使用tailwindcss CLI 来生成tailwind css的配置文件
+npx tailwindcss init
+```
+
+Tailwind的更多使用方式可以参考[Tailwind的安装和配置](https://tailwindcss.com/docs/installation)
+
+Tailwind提供了一个官方的[prettier插件](https://github.com/tailwindlabs/prettier-plugin-tailwindcss), 可以在保存时自动按照官方推荐的顺序[对Tailwind CSS的功能类进行排序](./vaults/006-自动排序.md)
 
 
 
