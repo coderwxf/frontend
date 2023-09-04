@@ -6,9 +6,13 @@ isolatedModules在`tsconfig.json`中的默认值是false
 
 
 
+JavaScript提供了一个运算符用于检查一个值是否是另一个值的“实例”。
+
+具体来说，在JavaScript中，x instanceof Foo检查x的原型链是否包含Foo.prototype
 
 
-小程序 迭代 字符串
+
+
 
 
 
@@ -17,3 +21,35 @@ isolatedModules在`tsconfig.json`中的默认值是false
 ## 类 
 
 thisType
+
+
+
+
+
+
+
+泛型 - 接受参数的类型
+keyof类型运算符 - 使用keyof运算符创建新类型
+typeof类型运算符 - 使用typeof运算符创建新类型
+索引访问类型 - 使用Type['a']语法来访问类型的子集
+条件类型 - 类型在类型系统中类似于if语句
+映射类型 - 通过映射现有类型中的每个属性来创建类型
+模板文字类型 - 通过模板文字字符串修改属性的映射类型
+
+
+
+需要注意的是，泛型类的类型参数只适用于实例的一侧，而不包括静态成员。也就是说，在使用泛型类时，静态成员不能使用类的类型参数
+
+```ts
+function create<Type>(c: { new (): Type }): Type {
+  return new c();
+}
+```
+
+
+
+
+
+1. 这是md格式文本 以md格式进行解析并翻译为中文
+2. 翻译要通俗易懂 方便小白理解
+3. 以md格式进行返回 注意是md格式返回

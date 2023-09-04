@@ -382,6 +382,14 @@ Page({
 <view wx:for="{{ 10 }}" wx:key="index">
   {{ index }} -- {{ item }}
 </view>
+
+<!-- 
+  wx:for 可以迭代字符串  
+  index从0开始进行计算 
+-->
+<view wx:for="KlAUS" wx:key="index">
+  <text>{{ index  }} --- {{ item }}</text>
+</view>
 ```
 
 

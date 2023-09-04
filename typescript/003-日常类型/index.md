@@ -287,8 +287,3 @@ console.log(100n) // bigint
 
 
 
-
-
-symbol
-JavaScript中有一个用于通过Symbol()函数创建全局唯一引用的原始类型：
-
