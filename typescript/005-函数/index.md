@@ -287,8 +287,119 @@ function doSomething(f: Function) {
 
 
 
-## Rest参数
+**Rest Parameters（剩余参数）**
 
-除了使用可选参数或重载来创建可以接受各种固定参数数量的函数外，我们还可以使用rest参数定义可以接受任意数量参数的函数。
+在 TypeScript 中，我们可以使用剩余参数（Rest Parameters）定义可以接受任意数量参数的函数，而不限制参数的个数
 
-rest参数出现在其他参数之后，并使用...语法
+剩余参数使用 `...` 语法，并且位于其他参数之后 包括 可选参数
+
+在 TypeScript 中，对于这些参数的类型注解隐式地为 `any[]`，而不是 `any`
+
+如果需要指定类型注解，可以使用 `Array<T>`、`T[]` 或元组类型
+
+在目标运行时较旧的情况下，使用扩展参数可能需要打开 `downlevelIteration` 选项。
+
+
+
+**Rest Arguments（扩展参数）**
+
+我们可以使用扩展语法（Spread Syntax）从可迭代对象（例如数组）中提供可变数量的参数
+
+```ts
+const arr1 = [1, 2, 3];
+const arr2 = [4, 5, 6];
+arr1.push(...arr2);
+```
+
+```ts
+// 推断的类型是 number[] -- "一个包含零个或多个数字的数组"，而不是具体的两个数字
+const args = [8, 5];
+const angle = Math.atan2(...args);
+```
+
+为了解决这种情况，最简单的方法是使用 `const` 上下文
+
+```ts
+// 推断为长度为 2 的元组
+const args = [8, 5] as const;
+// 正确
+const angle = Math.atan2(...args);
+```
+
+
+
+**参数解构**
+
+你可以使用参数解构来方便地将作为参数传递的对象拆解成一个或多个函数体内的局部变量
+
+```ts
+type ABC = { a: number; b: number; c: number };
+
+function sum({ a, b, c }: ABC) {
+  console.log(a + b + c);
+}
+
+sum({ a: 10, b: 3, c: 9 });
+```
+
+
+
+### 返回类型：void
+
+使用`void`返回类型的上下文类型化并不强制函数不返回任何值。换句话说，当使用返回类型为`void`的上下文函数类型（`type voidFunc = () => void`）进行实现时，函数可以返回任何其他值，但是这些返回值将被忽略。
+
+```ts
+type voidFunc = () => void;
+
+const f1: voidFunc = () => {
+  return true;
+};
+
+const v1 = f1(); // type v1 = () => void
+```
+
+
+
+这种行为之所以成立 是因为JS存在以下行为
+
+​	`Array.prototype.push`方法返回一个数字
+
+​	而`Array.prototype.forEach`方法期望接收返回类型为`void`的函数作为参数：
+
+```ts
+const src = [1, 2, 3];
+const dst = [0];
+
+src.forEach((el) => dst.push(el));
+```
+
+
+
+但是字面函数定义具有`void`返回类型时，该函数必须不返回任何值
+
+```ts
+function f2(): void {
+  // @ts-expect-error
+  return true;
+}
+
+const f3 = function (): void {
+  // @ts-expect-error
+  // @ts-expect-error 是ts中的一个特殊注释
+  // 意思是下边的错误是用户所期望的 tsc不要将其标记为错误
+  return true;
+};
+
+// @ts-expect-error --- error
+// 因为@ts-expect-error 为一个没有任何错误的内容进行了错误标记
+const num = 123
+```
+
+
+
+
+
+
+
+
+
