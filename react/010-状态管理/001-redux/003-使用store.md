@@ -1,0 +1,93 @@
+直接注入 store 不用 { store: xxx }
+
+
+
+`themeContext.js`
+
+```js
+import { createContext } from 'react'
+export default createContext()
+```
+
+
+
+`app.js`
+
+```jsx
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App'
+import store from './store'
+import ThemeContext from './ThemeContext'
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+
+root.render(
+  // 通过context 全局注入store
+  <ThemeContext.Provider value={store}>
+    <App />
+  </ThemeContext.Provider>
+);
+```
+
+
+
+`App.jsx`
+
+```jsx
+import Count from './Count'
+import Opt from './Opt'
+
+function App() {
+  return (
+    <>
+      <Count />
+      <Opt />
+    </>
+  )
+}
+
+export default App
+```
+
+
+
+`Count.jsx`
+
+```jsx
+import React, { memo, useContext, useMemo, useState } from 'react'
+import ThemeContext from './ThemeContext'
+
+const Count = memo(() => {
+  const [_, setNum] = useState(0)
+  const store = useContext(ThemeContext)
+
+  // 通过getState 获取最新的状态值
+  const { count } = store.getState()
+  const dblCount = useMemo(() => count * 2, [count])
+
+ // 确保store只被订阅了一次
+  useEffect(() => {
+    // subscribe需要传入一个callback，这个callback会被加入到事件池中
+  	// 当store中的状态发生更新后，会依次执行加入事件池中的事件
+    const unSubscribe = store.subscribe(() => {
+      // 这里的本质就是通过Count.jsx，全局状态发生了更新，需要重新渲染
+      setNum(new Date())
+    })
+    
+    // subscribe方法返回一个函数，通过该函数可以将加入到事件池中的事件从事件池中移除掉
+    // return () => unSubscribe()
+  }, [])
+
+
+  return (
+    <>
+      <div>count: { count }</div>
+      <div>doubule count: { dblCount }</div>
+    </>
+  )
+})
+
+export default Count
+```
+
