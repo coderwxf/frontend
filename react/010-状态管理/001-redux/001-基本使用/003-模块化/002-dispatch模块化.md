@@ -24,7 +24,8 @@
 import { INCREMENT, DECREMENT } from '../consts'
 
 export const countAction = {
-  // 这些生成实际行为对象的方法被称之为 Action Creator
+  // 这些生成实际行为对象的方法被称之为 Action Creator(动作创建函数)
+  // 之所以被定义为方法，目录是为了方便通过组件传入参数
   increment(step) {
     return {
       type: INCREMENT,
@@ -79,6 +80,7 @@ export const userInfoAction = {
 import { countAction } from './countAction'
 import { userInfoAction } from './userInfoAction'
 
+// action模块化
 const actions =  {
   count: countAction,
   userInfo: userInfoAction
@@ -141,6 +143,7 @@ const userInfoReducer = (state = { name: 'Klaus', age: 23 }, action) => {
 
 export default userInfoReducer
 ```
+
 
 
 `store/index.js`
