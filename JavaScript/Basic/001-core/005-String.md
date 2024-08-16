@@ -38,3 +38,52 @@ let firstName = "Klaus";
 let info = `My name is ${firstName}`;
 ```
 
+
+
+## 标签模板字符串
+
+```js
+function foo(...args) {
+  console.log(args)
+}
+
+// 普通调用方式
+foo(10, 20, 30)
+
+// 标签模板字符串调用方式
+// 标签模板字符串调用本质是一种特殊的函数调用方式
+foo`my name is, my age is`
+// => [['my name is, my age is']]
+
+const username = 'Klaus'
+const age = 24
+
+// 模板字符串会被解析形成如下参数后被传入对应函数:
+// 1. 第一个元素是数组，是被模块字符串拆分的字符串组合
+// 2. 之后的参数内容是一个个模块字符串传入的变量值
+foo`my name is ${username}, my age is ${age}`
+// => [ [ 'my name is ', ', my age is ', '' ], 'Klaus', 24 ]
+```
+
+
+
+## Object.keys/Object.values/Object.entries
+
+Object.keys/Object.values/Object.entries 可以被用于在数组, 对象 和 字符串上
+Object.keys/Object.values/Object.entries 获取的属性名和属性值 是自身的属性名和属性值, 不包含原型对象上的对应属性名和属性值
+
+
+
+## String Padding
+
+```js
+const str = 'Hello'
+
+
+// 默认填充符为空格
+// 第二个参数需要是字符串
+// 如果不是字符串会尝试将其转换为字符串后，使用转换后形成的字符串的第一个字符作为填充字符
+console.log(str.padStart(10, 'a')) // => aaaaaHello
+console.log(str.padEnd(10, 'a')) // => Helloaaaaa
+```
+

@@ -94,3 +94,31 @@ let maxValue = Number.MAX_VALUE;
 let minValue = Number.MIN_VALUE;
 ```
 
+
+
+## bigInt
+
+bigInt这个数据类型，用于表示大于MAX_SAFE_INTEGER的整数
+
+表示方式是在数值的最后加上n
+
+```js
+// 在数值后边加上n 可以将一个数值转换为大整数类型
+const bingInt1 =  9007199254740992n
+
+// 任意数值后边加上n 都会转换为大整数类型，不一定是非常大的值
+console.log(1n)
+```
+
+大整数和其余类型的存储方式不同，因此大整数不能和其它值一起运算
+
+```js
+console.log(1n + 2n) // => 3n
+console.log(1n + 2) // error
+```
+
+
+
+nullish 即 值为null 或 undefined
+
+falsy 即值为0，空字符串，false，undefined，null
