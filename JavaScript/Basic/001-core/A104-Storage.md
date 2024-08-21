@@ -105,3 +105,24 @@ localCache.setItem(LOCAL_TEST, { name: 'Alex', age: 18 })
 console.log(localCache.getItem(LOCAL_TEST))
 ```
 
+
+
+## storage
+
+当`Web Storage ` 「 如`localStorage`和`sessionStorage` 」的状态发生变化时会触发`storage`事件
+
+```js
+const el = document.getElementById('btn')
+
+window.addEventListener('storage', e => {
+  console.log('Key:', event.key);
+  console.log('Old Value:', event.oldValue);
+  console.log('New Value:', event.newValue);
+  console.log('URL:', event.url);
+})
+
+el.addEventListener('click', () => {
+  sessionStorage.setItem('name', 'Klaus')
+})
+```
+

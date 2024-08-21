@@ -1,0 +1,1 @@
+JavaScript严格区分大小写
