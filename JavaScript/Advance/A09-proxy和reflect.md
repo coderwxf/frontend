@@ -208,6 +208,48 @@ if (Reflect.deleteProperty(user, 'name')) {
 
 
 
+### 示例
+
+#### 如何让`a===1 && a===2 && a===3`和`a==1 && a==2 && a==3`的判断结果为true
+
+判等可能会触发`隐式类型转换`，所以可以使用 `valueOf` 来实现
+
+```js
+class A {
+  constructor(value) {
+    this.value = value;
+  }
+
+  valueOf() {
+    return this.value ++
+  }
+}
+
+const a = new A(1)
+console.log(a == 1 && a == 2 && a == 3) // => true
+```
+
+
+
+而全等并不会进行类型转换，只能通过`defineProperty`或`Proxy`来进行监听
+
+```js
+let target = {
+  a: 0
+}
+
+const proxy = new Proxy(target, {
+  get(target, key, receiver) {
+    if (key === 'a') {
+      target[key]++
+      return Reflect.get(target, key, receiver)
+    }
+  }
+})
+
+console.log(proxy.a===1 && proxy.a===2 && proxy.a===3) // => true
+```
+
 
 
 
@@ -215,7 +257,5 @@ if (Reflect.deleteProperty(user, 'name')) {
 
 
 ----
-
-`Object.is`
 
 元编程
