@@ -5,9 +5,18 @@
 ## 作为全局对象
 
 + 在window对象上的所有属性都可以被访问
-+ 使用var定义的变量或者隐式全局变量会被添加到window对象中
+
++ 使用var定义的变量或者隐式全局变量会被添加到window对象中 「 node不会 」
+
 + window默认给我们提供了全局的函数和类:setTimeout、Math、Date、Object等
+
 + window 有window属性指向自身，理论上可以无限递归
+
+  ```js
+  console.log(window.window.window) // window
+  ```
+
+  
 
 
 

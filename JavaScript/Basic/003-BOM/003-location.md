@@ -261,10 +261,11 @@ URN(Uniform Resource Name，统一资源名称)，一个独立的、持久的、
 #### 示例：
 
 - `https://www.google.com`
-  - **一级域名（TLD）**：`.com`
-  - **二级域名（SLD）**：`google`
-  - **三级域名（子域名）**：`www`
+  - **一级域名（TLD）**：`.com` 「 注意是`.com`不是`com` 」
+  - **二级域名（SLD）**：`google.com`
+  - **三级域名（子域名）**：`www.google.com`
 - `https://docs.microsoft.com`
   - **一级域名（TLD）**：`.com`
-  - **二级域名（SLD）**：`microsoft`
-  - **三级域名（子域名）**：`docs`
+  - **二级域名（SLD）**：`microsoft.com`
+  - **三级域名（子域名）**：`docs.microsoft.com`
+
