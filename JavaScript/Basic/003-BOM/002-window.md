@@ -16,7 +16,20 @@
   console.log(window.window.window) // window
   ```
 
-  
+
+
+
+不同宿主环境，全局对象不一样
+
+浏览器 --- window
+
+node  --- global
+
+worker --- self
+
+为此ECMAScript提供了`globalThis`
+
+`globalThis`是一个变量，会自动根据宿主环境去引用对应的全局对象
 
 
 
