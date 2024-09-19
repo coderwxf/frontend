@@ -1,3 +1,66 @@
+vue 构建视图方式
+
+1. template
+2. JSX 
+   + 「 单大括号语法，大胡子语法 」
+   + template构建视图 编程性较弱，JSX编程性较高，但编写难度大
+
+
+
+template语法主要构成
+
+1. 插值语法 「 mustache, 双大括号语法，小胡子语法 」
+2. 指令 
+   + `v-xxx.修饰符.修饰符:参数 = 值`
+   + 本质就是供vue解析的自定义属性
+
+
+
+无论是大胡子语法还是小胡子语法，其中插入的值都是JavaScript表达式
+
+
+
+## 渲染
+
+**基本数据类型**
+
+1. `null/undefined` 渲染为空
+2. 其余情况都可以理解为都转换为了字符串 ：`String([value])`
+
+```js
+String(10n) // => '10'
+String(Symbol()) // => 'Symbol()'
+```
+
+
+
+**引用数据类型**
+
+1. 普通对象/数组对象，是基于 JSON.stringify 变为JSON字符串进行渲染
+2. 其余的对象，也可以理解为都是基于 String([value]) 变为字符串进行渲染
+
+```js
+JSON.stringify({name: 'Klaus'}) // => '{"name":"Klaus"}'
+JSON.stringify([1, 2, 3]) // => '[1, 2, 3]'
+
+// 没有参数，返回undefined 「不是字符串」
+JSON.stringify() // => undefined 
+
+JSON.stringify(/\d/) // => ’{}‘ // 转换失败，默认返回空对象
+```
+
+
+
+在模板中，vue定义了一个[白名单](https://github.com/vuejs/vue/blob/v2.6.10/src/core/instance/proxy.js#L9)
+
+只有白名单中的全局属性和方法才可以在模板中使用
+
+常见的有 JSON.parse/stringify、parseInt、Number、String等
+
+
+
+## 指令
+
 所有以 `v-` 开头的内容都是 Vue 提供的指令
 
 指令其实就是给标签设置“自定义属性”
@@ -10,12 +73,12 @@ v-xxx.修饰符:参数 = "值/状态"
 
 
 
-## 设置内容「 非表单元素 」
+### 设置内容「 非表单元素 」
 
 + `v-html`：等同于`innerHTML`
   + 可以识别HTML字符串，把字符串中出现的标签渲染为DOM结构
   + 注意需要避免XSS攻击
-  
+
 + `v-text`：等同于`innerText`
   + 会把所有内容都当做普通文本渲染
   + 类似于小胡子语法，但是没有小胡子语法灵活
@@ -25,7 +88,7 @@ v-xxx.修饰符:参数 = "值/状态"
 
 
 
-## 显示或隐藏
+### 显示或隐藏
 
 `v-show`和`v-if`用于控制元素的显示和隐藏 「 指令值都是布尔值 」
 
@@ -61,6 +124,7 @@ v-for = "(item, index) [in|of] 可迭代对象
 
 
 迭代的值
+
 + 数组 「 `(item, index) in arr` 」
 + 数字 「 `(item, index) in <num>` 」 --- 假设`num`是`5`，则按照 `[1, 2, 3, 4, 5]`进行解析
 + 字符串 「 `(item, index) in 'Klaus'` 」 --- 作为字符数组进行解析
@@ -138,13 +202,40 @@ v-for = "(item, index) [in|of] 可迭代对象
 
   
 
-> 推荐使用`template标签`「 占位空标签 」, 将`v-for`和`v-if`分开 
->
-> template标签在解析时会被移除，所以`template标签不能设置key属性`
+推荐使用`template标签`「 占位空标签 」, 将`v-for`和`v-if`分开 
+
+在 Vue 2 中，`template` 标签不能直接设置 `key`。如
+
+在 Vue 3 中，`template` 标签可以设置 `key`。Vue 会使用这个 `key` 来跟踪整个子元素块的变化
+
+```html
+<template v-for="item in items" :key="item.id">
+  <div>{{ item.name }}</div>
+  <span>{{ item.description }}</span>
+</template>
+```
 
 
 
-## 事件绑定
+### 事件绑定
+
+#### methods
+
+1. 在`new Vue`阶段
+
+   + 使用`bind`方法，将函数中的this修改为vue实例对象，
+
+     并将修正this后的新method挂载到组件实例上
+
+     所以method不要写成箭头函数 
+
+     
+
+2. 修改methods，视图不需要更新，所以methods中的方法不需要进行响应式处理
+
+
+
+#### v-on
 
 `v-on`（简写`@`）用于实现事件绑定
 
@@ -329,7 +420,7 @@ vm.bar = function() {} // bar内部this 遵循独立函数调用
 
 
 
-## 属性绑定
+### 属性绑定
 
 v-bind（简写:） 用于动态绑定元素的属性
 
@@ -348,7 +439,7 @@ v-bind 主要有两个作用：
 
 
 
-## 设置内容 「 表单元素 」
+### 设置内容 「 表单元素 」
 
 `v-model`实现了数据的双向绑定。当表单元素的内容发生变化时，对应的状态也会自动更新。「 视图 驱动 状态 修改 」
 
@@ -364,7 +455,7 @@ v-bind 主要有两个作用：
 
 
 
-### 修饰符
+#### 修饰符
 
 | 修饰符 | 功能                                                         |
 | ------ | ------------------------------------------------------------ |
@@ -381,7 +472,7 @@ v-bind 主要有两个作用：
 
 
 
-### 绑定值
+#### 绑定值
 
 > 只要多个表单元素绑定的状态是同一个，则这多个表单元素就变成了一组
 >
@@ -418,6 +509,18 @@ v-bind 主要有两个作用：
   + 如果设置或修改的值不是布尔值，会转换为布尔值
   + 所以单选checkbox只要设置`v-model`，不需要设置`value`
   + 其是根据状态值是否为true，来控制是否选中
+  + 可以通过`true-value` 和 `false-value`来修改checkbox切换时候的值『 使其不再是布尔类型值 』
+  
+  ```html
+  <input
+    type="checkbox"
+    v-model="toggle"
+    true-value="yes"
+    false-value="no" 
+  />
+  ```
+  
+  
 + 如果是一组 checkbox，`v-model` 绑定的是选中项的 `value` 构成的数组。 
 
 > 1. 单个checkbox 自己就能选中 或 取消选中
@@ -470,7 +573,7 @@ v-bind 主要有两个作用：
 
 
 
-## 渲染优化
+### 渲染优化
 
 #### v-pre
 
@@ -484,7 +587,7 @@ Vue 3 对静态内容的处理做了很多优化。它引入了**静态提升**�
 
 
 
-### v-cloak
+#### v-cloak
 
 `v-cloak` 是 Vue 中用于防止模板在数据未完全渲染时出现的闪烁问题。
 
@@ -503,7 +606,7 @@ Vue 3 对静态内容的处理做了很多优化。它引入了**静态提升**�
 
 
 
-###  v-once
+####  v-once
 
 当使用 `v-once` 指令时，Vue 只会在组件首次渲染时对该元素及其子元素进行编译和渲染。
 
@@ -511,15 +614,13 @@ Vue 3 对静态内容的处理做了很多优化。它引入了**静态提升**�
 
 
 
-### v-memo
+#### v-memo
 
 
 
+---
 
-
-----
-
------
+---
 
 v-xxx.修饰符:参数 = "值/状态"
 
@@ -527,11 +628,9 @@ v-xxx.修饰符:参数 = "值/状态"
 
 
 
-template构建视图 编程性较弱
 
 
 
-template 不能设置key，也不需要key？？？？
 
 
 
@@ -541,9 +640,3 @@ value: fun,
 
 
 passive
-
-
-
-input.radio => true-value/false-value
-
-radio ===> change 事件
