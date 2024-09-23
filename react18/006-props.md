@@ -63,6 +63,7 @@ Child.propTypes = {
   age: PropTypes.number.isRequired.
   node: PropTypes.node, // 任何可以被JSX渲染的内容
   child: PropTypes.elemebt, // JSX元素
+  PropTypes.arrayOf(PropTypes.element), // JSX元素组成的数组
   sex: PropTypes.oneOf(['male', 'female']), // 多个值中的任意一个
   msg: PropTypes.oneOfType([ // 多个类型中任意一个类型
     PropTypes.func, // 函数类型 
