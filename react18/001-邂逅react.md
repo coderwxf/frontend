@@ -20,7 +20,7 @@ root.render(<App />);
 
    「 挂载点中的内容是应用，挂载点本身不属于应用的一部分  」
 
-3. React16开始渲染是通过新建根元素，再渲染根组件
+3. React18开始渲染是通过新建根元素，再渲染根组件
 
    ```js
    const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -28,13 +28,21 @@ root.render(<App />);
    root.render(<App />);
    ```
 
-   React16之前是，直接通过render方法进行渲染
+   React18之前是，直接通过render方法进行渲染
 
    ```js
    React.render(<App />, document.getElementById('root'))
    ```
 
    
+   
+   当存在多个根节点需要渲染时，这多个根节点的渲染方式如下:
+   
+   + `createRoot + render` => 采用React的并发模式
+   
+   + `render` => 同步渲染模式
+
+
 
 ## react的渲染库
 
@@ -44,3 +52,12 @@ root.render(<App />);
 | `react-dom/server` | 构建WebApp => SSR 「 VDOM -> Html String 」 |
 | `react-native`     | 构建NativeApp => 「 VDOM -> APP原生控件 」  |
 
+
+
+## react版本
+
+React16 是个版本大更新 => 引入了fiber
+
+React17 和 React16 基本用法保持一致  只是底层进行了性能优化
+
+React18 是个版本大更新 => 引入了并发特性 和 hook函数
