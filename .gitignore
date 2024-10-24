@@ -1,3 +1,5 @@
 ignore/
 
+**/bak.md
+
 .DS_Store
